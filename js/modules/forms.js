@@ -1,7 +1,9 @@
+import {
+    postData
+} from "../services/services";
 import validation from "./validation";
-import { postData } from "../services/services";
 
-export default function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
+function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
     const forms = document.querySelectorAll(formSelector),
         modal = document.querySelector(modalSelector),
         message = document.querySelector(messageSelector),
@@ -23,22 +25,28 @@ export default function forms(formSelector, modalSelector, messageSelector, btnC
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            document.body.classList.add('sending');
+            const isValid = validation(form)
 
-            const formData = new FormData(form);
+            if (isValid) {
+                document.body.classList.add('sending');
 
-            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+                const formData = new FormData(form);
 
-            postData('https://jsonplaceholder.typicode.com/posts', json)
-                .then(() => {
-                    closeModal();
-                    message.classList.add('success');
-                }).catch(() => {
-                    closeModal();
-                    message.classList.add('failure');
-                }).finally(() => {
-                    form.reset();
-                })
+                const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+                postData('http://localhost:3000/request', json)
+                    .then(() => {
+                        closeModal();
+                        message.classList.add('success');
+                    }).catch(() => {
+                        closeModal();
+                        message.classList.add('failure');
+                    }).finally(() => {
+                        form.reset();
+                    })
+            } else {
+                console.log('Ошибка валидации формы');
+            }
         })
     }
 
@@ -47,3 +55,5 @@ export default function forms(formSelector, modalSelector, messageSelector, btnC
         modal.classList.remove('modal-open');
     }
 }
+
+export default forms;

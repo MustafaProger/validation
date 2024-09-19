@@ -263,3 +263,16 @@ body.sending .loading {
 .message.failure .message-failure {
     display: block
 }
+
+span.error {
+    margin: 20px auto;
+    width: 280px;
+    font-size: 18px;
+    text-align: center;
+    padding: 0;
+    color: red
+}
+
+.order__icon {
+    margin-top: 15px;
+}

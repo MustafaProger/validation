@@ -1,4 +1,5 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./js/modules/forms.js":
@@ -7,14 +8,12 @@
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ forms)
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./validation */ "./js/modules/validation.js");
-/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_validation__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/services */ "./js/services/services.js");
+/* harmony import */ var _services_services__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../services/services */ "./js/services/services.js");
+/* harmony import */ var _validation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validation */ "./js/modules/validation.js");
 
 
 
@@ -40,22 +39,28 @@ function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            document.body.classList.add('sending');
+            const isValid = (0,_validation__WEBPACK_IMPORTED_MODULE_1__["default"])(form)
 
-            const formData = new FormData(form);
+            if (isValid) {
+                document.body.classList.add('sending');
 
-            const json = JSON.stringify(Object.fromEntries(formData.entries()));
+                const formData = new FormData(form);
 
-            (0,_services_services__WEBPACK_IMPORTED_MODULE_1__.postData)('https://jsonplaceholder.typicode.com/posts', json)
-                .then(() => {
-                    closeModal();
-                    message.classList.add('success');
-                }).catch(() => {
-                    closeModal();
-                    message.classList.add('failure');
-                }).finally(() => {
-                    form.reset();
-                })
+                const json = JSON.stringify(Object.fromEntries(formData.entries()));
+
+                (0,_services_services__WEBPACK_IMPORTED_MODULE_0__.postData)('http://localhost:3000/request', json)
+                    .then(() => {
+                        closeModal();
+                        message.classList.add('success');
+                    }).catch(() => {
+                        closeModal();
+                        message.classList.add('failure');
+                    }).finally(() => {
+                        form.reset();
+                    })
+            } else {
+                console.log('Ошибка валидации формы');
+            }
         })
     }
 
@@ -65,6 +70,8 @@ function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
     }
 }
 
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (forms);
+
 /***/ }),
 
 /***/ "./js/modules/modal.js":
@@ -73,7 +80,6 @@ function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
   \*****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ modal)
@@ -128,7 +134,6 @@ modal('[data-modal]', '[data-close]', '.modal');
   \**********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ phoneInput)
@@ -217,37 +222,61 @@ function phoneInput() {
 /*!**********************************!*\
   !*** ./js/modules/validation.js ***!
   \**********************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-// export default function validation() {
-//     const nameInput = document.querySelectorAll('.input-name');
-//     const nameError = document.querySelectorAll('.error__name');
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ validation)
+/* harmony export */ });
+function validation(form) {
+    const nameInput = form.querySelector('.input-name');
+
+    let message = {
+        name: {
+            required: 'Поле имени обязательно',
+            minLength: 'Имя должно быть не менее 2 символов'
+        }
+    }
+
+    let { name } = message;
+
+    let isValid = true; 
+    
+    if (!nameInput) {
+        return false;
+    }
+
+    let nameError = form.querySelector('.error');
+    if (!nameError) {
+        nameError = document.createElement('span');
+        nameError.classList.add('error');
+        nameError.style.display = 'none';
+        nameInput.insertAdjacentElement('afterend', nameError);
+    }
+
+    nameInput.addEventListener('input', () => {
+        validationName(name.required, name.minLength);
+    })
+
+    validationName(name.required, name.minLength);
+
+    return isValid;
 
 
-//     nameInput.forEach((input, indexInput, arrInput) => {
-//         nameError.forEach((span, indexSpan, arrSpan) => {
-//             if (indexInput === indexSpan) {
-
-//                 validationName(input, indexInput)
-                
-//                 input.addEventListener('input', () => {
-//                     validationName(input, indexInput)
-//                 });
-//             }
-//         })
-//     })
-
-//     function validationName(name, index) {
-//         if (name.value === '') {
-//             nameError[index].textContent = 'Поле имени обязательно';
-//         } else if (name.value.length < 2) {
-//             nameError[index].textContent = 'Имя должно быть не менее 2 символов';
-//         } else {
-//             nameError[index].textContent = '';
-//         }
-//     }
-
-// }
+    function validationName(nameTrue, nameLength) {
+        if (nameInput.value.trim() === '') {
+            nameError.innerHTML = nameTrue;
+            nameError.style.display = 'block';
+            isValid = false; 
+        } else if (nameInput.value.length < 2) {
+            nameError.innerHTML = nameLength;
+            nameError.style.display = 'block';
+            isValid = false;
+        } else {
+            nameError.style.display = 'none';
+        }
+    }
+}
 
 /***/ }),
 
@@ -257,7 +286,6 @@ function phoneInput() {
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   getResource: () => (/* binding */ getResource),
@@ -320,18 +348,6 @@ const getResource = async (url) => {
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -362,9 +378,6 @@ const getResource = async (url) => {
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
 /*!**********************!*\
   !*** ./js/script.js ***!
   \**********************/
@@ -384,8 +397,6 @@ window.addEventListener('DOMContentLoaded', () => {
     (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '[data-close]', '.modal');
     (0,_modules_phoneinput__WEBPACK_IMPORTED_MODULE_2__["default"])();
 })
-})();
-
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
