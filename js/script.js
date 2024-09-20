@@ -8,5 +8,5 @@ import phoneInput from './modules/phoneinput';
 window.addEventListener('DOMContentLoaded', () => {
     forms('form', '.modal', '.message', '[data-close]');
     modal('[data-modal]', '[data-close]', '.modal');
-    phoneInput();
+    // phoneInput();
 })

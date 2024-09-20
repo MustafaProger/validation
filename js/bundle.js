@@ -230,50 +230,70 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 function validation(form) {
     const nameInput = form.querySelector('.input-name');
+    const phoneInput = form.querySelector('.input-phone');
+
+    let isValid = true;
 
     let message = {
         name: {
-            required: 'Поле имени обязательно',
-            minLength: 'Имя должно быть не менее 2 символов'
+            required: 'Введите имя пользователя',
+            minLength: 'Введите не менее 2 символов'
+        },
+        phone: {
+            required: 'Введите номер телефона',
+            minLength: 'Введите номер корректно',
         }
     }
 
-    let { name } = message;
+    let { name, phone } = message;
 
-    let isValid = true; 
-    
-    if (!nameInput) {
-        return false;
-    }
-
-    let nameError = form.querySelector('.error');
-    if (!nameError) {
-        nameError = document.createElement('span');
-        nameError.classList.add('error');
-        nameError.style.display = 'none';
-        nameInput.insertAdjacentElement('afterend', nameError);
-    }
-
-    nameInput.addEventListener('input', () => {
-        validationName(name.required, name.minLength);
-    })
-
-    validationName(name.required, name.minLength);
+    nameErrorWork();
+    phoneErrorWork();
 
     return isValid;
 
 
-    function validationName(nameTrue, nameLength) {
-        if (nameInput.value.trim() === '') {
-            nameError.innerHTML = nameTrue;
-            nameError.style.display = 'block';
-            isValid = false; 
-        } else if (nameInput.value.length < 2) {
-            nameError.innerHTML = nameLength;
-            nameError.style.display = 'block';
+    function nameErrorWork() {
+        let nameError = form.querySelector('.name__error');
+        createError(nameError, nameInput, 'name');
+        nameError = form.querySelector('.name__error');
+        nameInput.addEventListener('input', () => {
+            validationNamePhone(nameInput, nameError, 2, name.required, name.minLength);
+        });
+        validationNamePhone(nameInput, nameError, 2, name.required, name.minLength);
+    }
+
+    function phoneErrorWork() {
+        let phoneError = form.querySelector('.phone__error');
+        createError(phoneError, phoneInput, 'phone');
+        phoneError = form.querySelector('.phone__error');
+        phoneInput.addEventListener('input', () => {
+            validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength);
+        });
+        validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength);
+    }
+
+    function validationNamePhone(input, error, length, required, minLength) {
+        if (input.value.trim() === '') {
+            error.innerHTML = required;
+            error.style.display = 'block';
+            isValid = false;
+        } else if (input.value.length < length) {
+            error.innerHTML = minLength;
+            error.style.display = 'block';
             isValid = false;
         } else {
-            nameError.style.display = 'none';
+            error.style.display = 'none';
+        }
+    }
+
+    function createError(error, input, name) {
+        if (!error) {
+            error = document.createElement('span');
+            error.classList.add(`error`);
+            error.classList.add(`${name}__error`);
+            error.style.display = 'none';
+            input.insertAdjacentElement('afterend', error);
         }
     }
 }
@@ -395,7 +415,7 @@ __webpack_require__.r(__webpack_exports__);
 window.addEventListener('DOMContentLoaded', () => {
     (0,_modules_forms__WEBPACK_IMPORTED_MODULE_0__["default"])('form', '.modal', '.message', '[data-close]');
     (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '[data-close]', '.modal');
-    (0,_modules_phoneinput__WEBPACK_IMPORTED_MODULE_2__["default"])();
+    // phoneInput();
 })
 /******/ })()
 ;
