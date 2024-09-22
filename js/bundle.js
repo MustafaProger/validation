@@ -237,15 +237,20 @@ function validation(form) {
     let message = {
         name: {
             required: 'Введите имя пользователя',
-            minLength: 'Введите не менее 2 символов'
+            minLength: 'Введите не менее 2 символов',
+            correct: 'Имя не должно содержать цифр'
         },
         phone: {
             required: 'Введите номер телефона',
-            minLength: 'Введите номер корректно',
+            minLength: 'Введите не менее 11 символов',
+            correct: 'Номер не должен содержать буквы',
         }
     }
 
-    let { name, phone } = message;
+    let {
+        name,
+        phone
+    } = message;
 
     nameErrorWork();
     phoneErrorWork();
@@ -258,9 +263,9 @@ function validation(form) {
         createError(nameError, nameInput, 'name');
         nameError = form.querySelector('.name__error');
         nameInput.addEventListener('input', () => {
-            validationNamePhone(nameInput, nameError, 2, name.required, name.minLength);
+            validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
         });
-        validationNamePhone(nameInput, nameError, 2, name.required, name.minLength);
+        validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
     }
 
     function phoneErrorWork() {
@@ -268,18 +273,25 @@ function validation(form) {
         createError(phoneError, phoneInput, 'phone');
         phoneError = form.querySelector('.phone__error');
         phoneInput.addEventListener('input', () => {
-            validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength);
+            validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
         });
-        validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength);
+        validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
     }
 
-    function validationNamePhone(input, error, length, required, minLength) {
+    function validationNamePhone(input, error, length, required, minLength, rgx, correct) {
+
+        const regex = rgx;
+
         if (input.value.trim() === '') {
             error.innerHTML = required;
             error.style.display = 'block';
             isValid = false;
         } else if (input.value.length < length) {
             error.innerHTML = minLength;
+            error.style.display = 'block';
+            isValid = false;
+        } else if (regex.test(input.value)) {
+            error.innerHTML = correct;
             error.style.display = 'block';
             isValid = false;
         } else {
