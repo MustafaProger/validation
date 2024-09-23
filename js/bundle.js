@@ -100,6 +100,31 @@ function modal(btnOpenSelector, btnCloseSelector, modalSelector) {
         document.body.classList.add('fixed');
     }
 
+    /**
+     * handleFloatingLabel — функция для управления состоянием "плавающей метки".
+     * Она уменьшает и перемещает метку вверх, когда поле ввода содержит текст,
+     * и возвращает метку в исходное положение, если поле ввода пустое.
+     *
+     * Функция работает с набором инпутов и соответствующими метками.
+     */
+
+
+    function handleFloatingLabel() {
+        const labels = document.querySelectorAll('.label');
+        const inputs = document.querySelectorAll('.modal input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                const label = labels[index]; // Связываем конкретный инпут с его лейблом
+                if (input.value !== '') {
+                    label.style.cssText = 'font-size: 0.8rem; top: 10px; transform: translateY(-150%);';
+                } else {
+                    label.style.cssText = ''; // Возвращаем лейбл в исходное положение, если инпут пустой
+                }
+            });
+        });
+    }
+
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
@@ -122,9 +147,8 @@ function modal(btnOpenSelector, btnCloseSelector, modalSelector) {
     })
 
     window.addEventListener('scroll', showModalByScroll);
+    handleFloatingLabel();
 }
-
-modal('[data-modal]', '[data-close]', '.modal');
 
 /***/ }),
 
@@ -263,9 +287,9 @@ function validation(form) {
         createError(nameError, nameInput, 'name');
         nameError = form.querySelector('.name__error');
         nameInput.addEventListener('input', () => {
-            validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
+            validationNamePhone(nameInput, nameError, 2, name.required, /\d/, name.correct, name.minLength);
         });
-        validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
+        validationNamePhone(nameInput, nameError, 2, name.required, /\d/, name.correct, name.minLength);
     }
 
     function phoneErrorWork() {
@@ -273,25 +297,23 @@ function validation(form) {
         createError(phoneError, phoneInput, 'phone');
         phoneError = form.querySelector('.phone__error');
         phoneInput.addEventListener('input', () => {
-            validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
+            validationNamePhone(phoneInput, phoneError, 11, phone.required, /\D/, phone.correct, phone.minLength);
         });
-        validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
+        validationNamePhone(phoneInput, phoneError, 11, phone.required, /\D/, phone.correct, phone.minLength);
     }
 
-    function validationNamePhone(input, error, length, required, minLength, rgx, correct) {
-
-        const regex = rgx;
+    function validationNamePhone(input, error, length, required, regex, correct, minLength) {
 
         if (input.value.trim() === '') {
             error.innerHTML = required;
             error.style.display = 'block';
             isValid = false;
-        } else if (input.value.length < length) {
-            error.innerHTML = minLength;
-            error.style.display = 'block';
-            isValid = false;
         } else if (regex.test(input.value)) {
             error.innerHTML = correct;
+            error.style.display = 'block';
+            isValid = false;
+        } else if (input.value.length < length) {
+            error.innerHTML = minLength;
             error.style.display = 'block';
             isValid = false;
         } else {
@@ -308,6 +330,7 @@ function validation(form) {
             input.insertAdjacentElement('afterend', error);
         }
     }
+
 }
 
 /***/ }),

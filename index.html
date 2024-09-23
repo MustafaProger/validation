@@ -9,19 +9,28 @@
 </head>
 
 <body>
-    <button data-modal class="btn btn_white">Регистрация данных</button>
+    <button data-modal class="btn btn_white">Регистрация</button>
 
     <div class="modal">
         <div class="modal__dialog">
             <div class="modal__content">
                 <form action="#">
                     <div data-close class="modal__close">&times;</div>
-                    <div class="modal__title">Мы свяжемся с вами как можно быстрее!</div>
-                    <input placeholder="Имя" name="name" type="text" class="modal__input input-name">
-                    <input placeholder="Номер телефона" name="phone" data-tel-input maxlength="18" type="tel"
-                        class="modal__input input-phone">
-                    <input placeholder="Пароль" name="password" type="password" class="modal__input">
-                    <button class="btn btn_dark btn_min btn_send">Отправить</button>
+                    <div class="modal__title">Регистрация</div>
+                    <div class="input-field">
+                        <input name="name" type="text" class="modal__input input-name">
+                        <label class="label label-name">Имя</label>
+                    </div>
+                    <div class="input-field">
+                        <input name="phone" data-tel-input maxlength="18" type="tel" class="modal__input input-phone">
+                        <label class="label label-phone">Номер телефона</label>
+                    </div>
+                    <div class="input-field">
+                        <input name="password" type="password" class="modal__input">
+                        <label class="label label-password">Пароль</label>
+                    </div>
+
+                    <button class="btn modal__btn">Отправить</button>
                 </form>
             </div>
         </div>
@@ -29,21 +38,22 @@
 
     <div class="order">
         <div class="container">
-            <div class="title">Введите свои данные для регистрации!</div>
+            <div class="title">Оставьте заявку и мы с вами свяжемся!</div>
             <form action="#" class="order__form">
                 <div class="order__name">
                     <input placeholder="Имя" name="name" type="text" class="order__input input-name">
                 </div>
                 <div class="order__phone">
-                    <input placeholder="Номер телефона" name="phone" type="tel" data-tel-input class="order__input input-phone">
+                    <input placeholder="Номер телефона" name="phone" type="tel" data-tel-input
+                        class="order__input input-phone">
                 </div>
                 <div class="order__password">
-                    <input placeholder="Пароль" name="password" type="password" class="order__input">
+                    <input placeholder="Email" name="email" type="email" class="order__input">
                 </div>
                 <div class="order__icon">
                     <img src="icons/right.svg" alt="right">
                 </div>
-                <button class="btn btn_dark btn_min btn_send">Отправить</button>
+                <button class="btn order__btn">Отправить</button>
             </form>
         </div>
     </div>

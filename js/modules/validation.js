@@ -33,9 +33,9 @@ export default function validation(form) {
         createError(nameError, nameInput, 'name');
         nameError = form.querySelector('.name__error');
         nameInput.addEventListener('input', () => {
-            validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
+            validationNamePhone(nameInput, nameError, 2, name.required, /\d/, name.correct, name.minLength);
         });
-        validationNamePhone(nameInput, nameError, 2, name.required, name.minLength, /\d/, name.correct);
+        validationNamePhone(nameInput, nameError, 2, name.required, /\d/, name.correct, name.minLength);
     }
 
     function phoneErrorWork() {
@@ -43,25 +43,23 @@ export default function validation(form) {
         createError(phoneError, phoneInput, 'phone');
         phoneError = form.querySelector('.phone__error');
         phoneInput.addEventListener('input', () => {
-            validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
+            validationNamePhone(phoneInput, phoneError, 11, phone.required, /\D/, phone.correct, phone.minLength);
         });
-        validationNamePhone(phoneInput, phoneError, 11, phone.required, phone.minLength, /\D/, phone.correct);
+        validationNamePhone(phoneInput, phoneError, 11, phone.required, /\D/, phone.correct, phone.minLength);
     }
 
-    function validationNamePhone(input, error, length, required, minLength, rgx, correct) {
-
-        const regex = rgx;
+    function validationNamePhone(input, error, length, required, regex, correct, minLength) {
 
         if (input.value.trim() === '') {
             error.innerHTML = required;
             error.style.display = 'block';
             isValid = false;
-        } else if (input.value.length < length) {
-            error.innerHTML = minLength;
-            error.style.display = 'block';
-            isValid = false;
         } else if (regex.test(input.value)) {
             error.innerHTML = correct;
+            error.style.display = 'block';
+            isValid = false;
+        } else if (input.value.length < length) {
+            error.innerHTML = minLength;
             error.style.display = 'block';
             isValid = false;
         } else {
@@ -78,4 +76,5 @@ export default function validation(form) {
             input.insertAdjacentElement('afterend', error);
         }
     }
+
 }

@@ -14,6 +14,31 @@ export default function modal(btnOpenSelector, btnCloseSelector, modalSelector) 
         document.body.classList.add('fixed');
     }
 
+    /**
+     * handleFloatingLabel — функция для управления состоянием "плавающей метки".
+     * Она уменьшает и перемещает метку вверх, когда поле ввода содержит текст,
+     * и возвращает метку в исходное положение, если поле ввода пустое.
+     *
+     * Функция работает с набором инпутов и соответствующими метками.
+     */
+
+
+    function handleFloatingLabel() {
+        const labels = document.querySelectorAll('.label');
+        const inputs = document.querySelectorAll('.modal input');
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', () => {
+                const label = labels[index]; // Связываем конкретный инпут с его лейблом
+                if (input.value !== '') {
+                    label.style.cssText = 'font-size: 0.8rem; top: 10px; transform: translateY(-150%);';
+                } else {
+                    label.style.cssText = ''; // Возвращаем лейбл в исходное положение, если инпут пустой
+                }
+            });
+        });
+    }
+
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
@@ -36,6 +61,5 @@ export default function modal(btnOpenSelector, btnCloseSelector, modalSelector) 
     })
 
     window.addEventListener('scroll', showModalByScroll);
+    handleFloatingLabel();
 }
-
-modal('[data-modal]', '[data-close]', '.modal');
