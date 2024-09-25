@@ -143,12 +143,12 @@ function modal(btnOpenSelector, btnCloseSelector, modalSelector, showHidePasswor
        }
     });
 
-    function showModalByScroll() {
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            openModal();
-            window.removeEventListener('scroll', showModalByScroll);
-        }
-    }
+    // function showModalByScroll() {
+    //     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+    //         openModal();
+    //         window.removeEventListener('scroll', showModalByScroll);
+    //     }
+    // }
 
     btnOpen.forEach((item) => {
         item.addEventListener('click', () => openModal())
@@ -164,7 +164,7 @@ function modal(btnOpenSelector, btnCloseSelector, modalSelector, showHidePasswor
         if (event.code == 'Escape' && modal.classList.contains('modal-open')) closeModal()
     })
 
-    window.addEventListener('scroll', showModalByScroll);
+    // window.addEventListener('scroll', showModalByScroll);
     handleFloatingLabel();
 }
 
@@ -394,11 +394,11 @@ function validation(form, inputName, inputPhone, inputPassword, inputEmail) {
                 element: errors[0]
             },
             {
-                regex: /[A-Z]/,
+                regex: /[A-ZА-ЯЁ]/,
                 element: errors[1]
             },
             {
-                regex: /[a-z]/,
+                regex: /[a-zа-яё]/,
                 element: errors[2]
             },
             {

@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@200;300;400;500;600;700&display=swap");
 
-/* Базовые стили */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -14,13 +13,11 @@ a {
 }
 
 body {
-
     background: url("../img/hero-bg.jpg") no-repeat center center/cover;
     overflow: hidden;
     background-attachment: fixed;
 }
 
-/* Кнопки */
 .btn {
     cursor: pointer;
     width: 250px;
@@ -46,7 +43,6 @@ body {
     margin: 40px auto 0 auto;
 }
 
-/* Модальное окно */
 .modal {
     position: fixed;
     top: 0;
@@ -165,7 +161,6 @@ body {
     transform: translateY(-150%);
 }
 
-/* Форма заказа */
 .order {
     width: 100%;
     margin: 50px auto 80px auto;
@@ -216,7 +211,6 @@ body {
     height: 30px;
 }
 
-/* Сообщения */
 .message {
     position: fixed;
     top: 0;
@@ -241,7 +235,6 @@ body {
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
-
 }
 
 .message.success,
@@ -251,7 +244,6 @@ body {
     display: block;
 }
 
-/* Индикатор загрузки */
 .loading {
     display: none;
     position: fixed;
@@ -303,7 +295,7 @@ span.error {
     margin: 15px 0;
     font-size: 14px;
     font-style: italic;
-    font-weight: 100;
+    font-weight: 500;
     color: rgba(255, 60, 0, 1);
 }
 
@@ -331,11 +323,15 @@ span.password__error {
       }
 }
 
-/* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
 
+    input, textarea, select {
+        font-size: 16px !important;
+        border-radius: 0px !important;
+      }
+
     .modal__dialog {
-        width: 370px;
+        width: 380px;
     }
 
     .message__title,

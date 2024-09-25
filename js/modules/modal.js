@@ -57,12 +57,12 @@ export default function modal(btnOpenSelector, btnCloseSelector, modalSelector, 
        }
     });
 
-    function showModalByScroll() {
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
-            openModal();
-            window.removeEventListener('scroll', showModalByScroll);
-        }
-    }
+    // function showModalByScroll() {
+    //     if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+    //         openModal();
+    //         window.removeEventListener('scroll', showModalByScroll);
+    //     }
+    // }
 
     btnOpen.forEach((item) => {
         item.addEventListener('click', () => openModal())
@@ -78,6 +78,6 @@ export default function modal(btnOpenSelector, btnCloseSelector, modalSelector, 
         if (event.code == 'Escape' && modal.classList.contains('modal-open')) closeModal()
     })
 
-    window.addEventListener('scroll', showModalByScroll);
+    // window.addEventListener('scroll', showModalByScroll);
     handleFloatingLabel();
 }

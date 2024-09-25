@@ -122,11 +122,11 @@ export default function validation(form, inputName, inputPhone, inputPassword, i
                 element: errors[0]
             },
             {
-                regex: /[A-Z]/,
+                regex: /[A-ZА-ЯЁ]/,
                 element: errors[1]
             },
             {
-                regex: /[a-z]/,
+                regex: /[a-zа-яё]/,
                 element: errors[2]
             },
             {
