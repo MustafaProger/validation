@@ -256,7 +256,7 @@ function validation(form) {
     const nameInput = form.querySelector('.input-name');
     const phoneInput = form.querySelector('.input-phone');
     const passwordInput = form.querySelector('.input-password');
-    const emailInput = form.querySelector('.input-email'); 
+    const emailInput = form.querySelector('.input-email');
 
     let isValid = true;
 
@@ -281,71 +281,93 @@ function validation(form) {
 
     errorWork(nameInput, 'name', 2, /\d/, name);
     errorWork(phoneInput, 'phone', 11, /\D/, phone);
-    emailErrorWork();
-    passwordErrorWork();
+
+    if (passwordInput) {
+        passwordErrorWork();
+    } else if (emailInput) {
+        emailErrorWork();
+
+    }
 
     return isValid;
 
-
     function errorWork(input, classError, length, regex, message) {
-        let error = form.querySelector(`.${classError}__error`);
-        createError(error, input, `${classError}`);
-        error = form.querySelector(`.${classError}__error`);
-        input.addEventListener('input', () => {
+        createError(input, classError);
+        const error = form.querySelector(`.${classError}__error`);
+
+        const validateField = () => {
             validationNamePhone(input, error, length, regex, message);
-        });
-        validationNamePhone(input, error, length, regex, message);
+        };
+
+        input.removeEventListener('input', validateField);
+        input.addEventListener('input', validateField);
+        validateField();
     }
 
     function emailErrorWork() {
-        let emailError = form.querySelector('.email__error');
+        createError(emailInput, 'email');
+        const emailError = form.querySelector('.email__error');
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        createError(emailError, emailInput, 'email');
-        emailError = form.querySelector('.email__error');
-        
-        emailInput.addEventListener('input', () => {
+
+        const validateEmailField = () => {
             validationEmail(emailInput, emailError, emailRegex, email);
-        });
-        validationEmail(emailInput, emailError, emailRegex, email);
+        };
+
+        emailInput.removeEventListener('input', validateEmailField);
+        emailInput.addEventListener('input', validateEmailField);
+        validateEmailField();
     }
 
     function passwordErrorWork() {
         const passwordErrors = form.querySelectorAll('.password__error');
 
-        passwordInput.addEventListener('input', () => validatePassword(passwordInput, passwordErrors));
-        validatePassword(passwordInput, passwordErrors);
+        const validatePasswordField = () => {
+            validatePassword(passwordInput, passwordErrors);
+        };
+
+        passwordInput.removeEventListener('input', validatePasswordField);
+        passwordInput.addEventListener('input', validatePasswordField);
+        validatePasswordField();
     }
 
     function validationNamePhone(input, error, length, regex, message) {
+        let fieldIsValid = true;
+
         if (input.value.trim() === '') {
             error.innerHTML = message.required;
             error.style.display = 'block';
-            isValid = false;
+            fieldIsValid = false;
         } else if (regex.test(input.value)) {
             error.innerHTML = message.correct;
             error.style.display = 'block';
-            isValid = false;
+            fieldIsValid = false;
         } else if (input.value.length < length) {
             error.innerHTML = message.minLength;
             error.style.display = 'block';
-            isValid = false;
+            fieldIsValid = false;
         } else {
             error.style.display = 'none';
         }
+
+        if (!fieldIsValid) isValid = false;
     }
 
     function validationEmail(input, error, regex, message) {
+        let fieldIsValid = true;
+
         if (input.value.trim() === '') {
             error.innerHTML = message.required;
             error.style.display = 'block';
-            isValid = false;
+            fieldIsValid = false;
         } else if (!regex.test(input.value)) {
             error.innerHTML = message.correct;
             error.style.display = 'block';
-            isValid = false;
+            fieldIsValid = false;
         } else {
             error.style.display = 'none';
         }
+
+        if (!fieldIsValid) isValid = false;
     }
 
     function validatePassword(input, errors) {
@@ -372,9 +394,8 @@ function validation(form) {
         ];
 
         validations.forEach(({ regex, element }) => {
-            
             if (regex.test(input.value)) {
-                element.style.color = 'green'
+                element.style.color = 'green';
             } else {
                 isValid = false;
                 element.style.color = 'rgba(255, 60, 0, 1)';
@@ -382,11 +403,11 @@ function validation(form) {
         });
     }
 
-    function createError(error, input, name) {
+    function createError(input, name) {
+        let error = form.querySelector(`.${name}__error`);
         if (!error) {
             error = document.createElement('span');
-            error.classList.add(`error`);
-            error.classList.add(`${name}__error`);
+            error.classList.add('error', `${name}__error`);
             error.style.display = 'none';
             input.insertAdjacentElement('afterend', error);
         }

@@ -319,32 +319,12 @@ span.password__error {
 
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
-    .btn {
-        width: 100%;
-        height: auto;
-        padding: 12px;
-        font-size: 16px;
-    }
-
-    .modal__content,
-    .message-success,
-    .message-failure,
-    .wrapper,
-    .order .container {
-        padding: 20px;
-    }
 
     .modal__title,
     .message__title,
-    .wrapper h2,
     .order .title {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
-    .loading span {
-        width: 40px;
-        height: 40px;
-        border-width: 4px;
-    }
 }
 
