@@ -308,7 +308,7 @@ span.error {
 }
 
 span.password__error {
-    color:#fff
+    color: green
 }
 
 @keyframes spin {
