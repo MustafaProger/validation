@@ -25,7 +25,7 @@ function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const isValid = validation(form)
+            const isValid = validation(form, '.input-name', '.input-phone', '.input-password', '.input-email')
 
             if (isValid) {
                 document.body.classList.add('sending');

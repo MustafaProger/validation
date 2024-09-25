@@ -1,7 +1,8 @@
-export default function modal(btnOpenSelector, btnCloseSelector, modalSelector) {
+export default function modal(btnOpenSelector, btnCloseSelector, modalSelector, showHidePasswordSelector) {
     const btnOpen = document.querySelectorAll(btnOpenSelector),
         btnClose = document.querySelector(btnCloseSelector),
-        modal = document.querySelector(modalSelector);
+        modal = document.querySelector(modalSelector),
+        showHidePassword = document.querySelector(showHidePasswordSelector);
 
 
     function closeModal() {
@@ -38,6 +39,23 @@ export default function modal(btnOpenSelector, btnCloseSelector, modalSelector) 
             });
         });
     }
+
+    showHidePassword.addEventListener('click', function (event) {
+
+        event.preventDefault();
+
+        if (event.target.classList.contains('password-control')) {
+            const passwordInput = document.querySelector('.input-password');
+
+            if (passwordInput.type === 'password') {
+                event.target.classList.add('view');
+                passwordInput.type = 'text';
+            } else {
+                event.target.classList.remove('view');
+                passwordInput.type = 'password';
+            }
+       }
+    });
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {

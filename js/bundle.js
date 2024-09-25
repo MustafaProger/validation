@@ -39,7 +39,7 @@ function forms(formSelector, modalSelector, messageSelector, btnCloseSelector) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            const isValid = (0,_validation__WEBPACK_IMPORTED_MODULE_1__["default"])(form)
+            const isValid = (0,_validation__WEBPACK_IMPORTED_MODULE_1__["default"])(form, '.input-name', '.input-phone', '.input-password', '.input-email')
 
             if (isValid) {
                 document.body.classList.add('sending');
@@ -84,10 +84,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ modal)
 /* harmony export */ });
-function modal(btnOpenSelector, btnCloseSelector, modalSelector) {
+function modal(btnOpenSelector, btnCloseSelector, modalSelector, showHidePasswordSelector) {
     const btnOpen = document.querySelectorAll(btnOpenSelector),
         btnClose = document.querySelector(btnCloseSelector),
-        modal = document.querySelector(modalSelector);
+        modal = document.querySelector(modalSelector),
+        showHidePassword = document.querySelector(showHidePasswordSelector);
 
 
     function closeModal() {
@@ -124,6 +125,23 @@ function modal(btnOpenSelector, btnCloseSelector, modalSelector) {
             });
         });
     }
+
+    showHidePassword.addEventListener('click', function (event) {
+
+        event.preventDefault();
+
+        if (event.target.classList.contains('password-control')) {
+            const passwordInput = document.querySelector('.input-password');
+
+            if (passwordInput.type === 'password') {
+                event.target.classList.add('view');
+                passwordInput.type = 'text';
+            } else {
+                event.target.classList.remove('view');
+                passwordInput.type = 'password';
+            }
+       }
+    });
 
     function showModalByScroll() {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
@@ -252,11 +270,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ validation)
 /* harmony export */ });
-function validation(form) {
-    const nameInput = form.querySelector('.input-name');
-    const phoneInput = form.querySelector('.input-phone');
-    const passwordInput = form.querySelector('.input-password');
-    const emailInput = form.querySelector('.input-email');
+function validation(form, inputName, inputPhone, inputPassword, inputEmail) {
+    const nameInput = form.querySelector(inputName);
+    const phoneInput = form.querySelector(inputPhone);
+    const passwordInput = form.querySelector(inputPassword);
+    const emailInput = form.querySelector(inputEmail);
 
     let isValid = true;
 
@@ -530,7 +548,7 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener('DOMContentLoaded', () => {
     (0,_modules_forms__WEBPACK_IMPORTED_MODULE_0__["default"])('form', '.modal', '.message', '[data-close]');
-    (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '[data-close]', '.modal');
+    (0,_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])('[data-modal]', '[data-close]', '.modal', '.password-control');
     // phoneInput();
 })
 /******/ })()

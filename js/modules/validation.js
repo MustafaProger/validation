@@ -1,8 +1,8 @@
-export default function validation(form) {
-    const nameInput = form.querySelector('.input-name');
-    const phoneInput = form.querySelector('.input-phone');
-    const passwordInput = form.querySelector('.input-password');
-    const emailInput = form.querySelector('.input-email');
+export default function validation(form, inputName, inputPhone, inputPassword, inputEmail) {
+    const nameInput = form.querySelector(inputName);
+    const phoneInput = form.querySelector(inputPhone);
+    const passwordInput = form.querySelector(inputPassword);
+    const emailInput = form.querySelector(inputEmail);
 
     let isValid = true;
 

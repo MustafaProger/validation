@@ -116,6 +116,7 @@ body {
 }
 
 .modal__input {
+    position: relative;
     width: 100%;
     height: 35px;
     padding: 0px 0px;
@@ -124,6 +125,19 @@ body {
     border: none;
     border-bottom: 2px solid #fff;
     outline: none;
+}
+
+.password-control {
+	position: absolute;
+	top: 0px;
+	right: 5px;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	background: url(../icons/password/hide.svg) 0 0 no-repeat;
+}
+.password-control.view {
+	background: url(../icons/password/show.svg) 0 0 no-repeat;
 }
 
 .modal__btn {
