@@ -22,16 +22,16 @@ body {
 
 /* Кнопки */
 .btn {
-    cursor: pointer; 
-    width: 250px; 
-    height: 45.5px; 
+    cursor: pointer;
+    width: 250px;
+    height: 45.5px;
     margin: 10px 0;
     padding: 12px 20px;
     color: #fff;
     font-size: 16px;
     font-weight: 600;
-    border: none; 
-    border-radius: 3px; 
+    border: none;
+    border-radius: 3px;
     background-color: rgba(255, 225, 245, 0.3);
     transition: all 0.3s ease;
 }
@@ -42,8 +42,8 @@ body {
 }
 
 .btn_white {
-    display: block;  
-    margin: 40px auto 0 auto; 
+    display: block;
+    margin: 40px auto 0 auto;
 }
 
 /* Модальное окно */
@@ -69,15 +69,20 @@ body {
     width: 400px;
     margin: 50px auto 0 auto;
     backdrop-filter: blur(10px);
+    animation: fadeInDown;
+    animation-duration: 0.5s
 }
 
 .modal__content {
     position: relative;
     padding: 40px;
     color: #fff;
+    max-height: 100vh;
+    overflow-y: auto;
 }
 
-.modal__close, .message__close {
+.modal__close,
+.message__close {
     cursor: pointer;
     position: absolute;
     top: 15px;
@@ -99,11 +104,13 @@ body {
     right: 7.5px;
 }
 
-.modal__close:hover, .message__close:hover {
+.modal__close:hover,
+.message__close:hover {
     opacity: 1;
 }
 
-.modal__title, .message__title {
+.modal__title,
+.message__title {
     text-align: center;
     font-size: 1.5rem;
 }
@@ -125,7 +132,7 @@ body {
 
 .input-field {
     position: relative;
-    margin: 45px 0;
+    margin-top: 45px;
 }
 
 .input-field label {
@@ -138,7 +145,7 @@ body {
     transition: 0.15s ease;
 }
 
-.input-field input:focus~label { 
+.input-field input:focus~label {
     font-size: 0.8rem;
     top: 10px;
     transform: translateY(-150%);
@@ -222,10 +229,11 @@ body {
     backdrop-filter: blur(10px);
 
 }
+
 .message.success,
 .message.failure,
-.message.success .message-success, 
-.message.failure .message-failure{
+.message.success .message-success,
+.message.failure .message-failure {
     display: block;
 }
 
@@ -277,11 +285,16 @@ body.sending .loading {
 }
 
 span.error {
+    display: block;
     margin: 15px 0;
     font-size: 14px;
     font-style: italic;
     font-weight: 100;
     color: rgba(255, 60, 0, 1);
+}
+
+span.password__error {
+    color:#fff
 }
 
 @keyframes spin {
@@ -290,8 +303,22 @@ span.error {
     }
 }
 
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+      }
+}
+
 /* Медиа-запросы для адаптивности */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
     .btn {
         width: 100%;
         height: auto;
@@ -299,11 +326,18 @@ span.error {
         font-size: 16px;
     }
 
-    .modal__content, .message-success, .message-failure, .wrapper, .order .container {
+    .modal__content,
+    .message-success,
+    .message-failure,
+    .wrapper,
+    .order .container {
         padding: 20px;
     }
 
-    .modal__title, .message__title, .wrapper h2, .order .title {
+    .modal__title,
+    .message__title,
+    .wrapper h2,
+    .order .title {
         font-size: 1.2rem;
     }
 
@@ -313,3 +347,4 @@ span.error {
         border-width: 4px;
     }
 }
+

@@ -26,8 +26,13 @@
                         <label class="label label-phone">Номер телефона</label>
                     </div>
                     <div class="input-field">
-                        <input name="password" type="password" class="modal__input">
+                        <input name="password" type="password" class="modal__input input-password">
                         <label class="label label-password">Пароль</label>
+                        <span class="error password__error">Не менее 8 символов</span>
+                        <span class="error password__error">Не менее одной заглавной буквы</span>
+                        <span class="error password__error">Не менее одной строчной буквы</span>
+                        <span class="error password__error">Не менее одной цифры</span>
+                        <span class="error password__error">Не менее одного спец. символа (@, $, #, %, *, ...)</span>
                     </div>
 
                     <button class="btn modal__btn">Отправить</button>
@@ -47,8 +52,8 @@
                     <input placeholder="Номер телефона" name="phone" type="tel" data-tel-input
                         class="order__input input-phone">
                 </div>
-                <div class="order__password">
-                    <input placeholder="Email" name="email" type="email" class="order__input">
+                <div class="order__email">
+                    <input placeholder="Email" name="email" type="email" class="order__input input-email">
                 </div>
                 <div class="order__icon">
                     <img src="icons/right.svg" alt="right">
