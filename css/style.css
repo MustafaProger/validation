@@ -320,11 +320,50 @@ span.password__error {
 /* Медиа-запросы для адаптивности */
 @media (max-width: 768px) {
 
-    .modal__title,
+    .modal__dialog {
+        width: 370px;
+    }
+
     .message__title,
     .order .title {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
+    }
+
+    .order__form {
+        flex-direction: column;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    .order .btn {
+        width: 300px;
+    }
+
+    .order__input {
+        padding: 10px 0;
+    }
+
+    .order__icon {
+        display: none;
+    }
+
+    .order span.error {
+        margin: 15px 0 0 0;
+    }
+}
+
+@media (max-width: 375px) {
+
+    .modal__dialog {
+        width: 330px;
+    }
+
+    .modal__content {
+        padding: 40px 20px;
+    }
+
+    .order .container {
+        padding: 0;
     }
 
 }
-
